@@ -75,41 +75,6 @@ function run_ml_guest_post() {
  */
 include_once 'framework/piklist.php';
 
-// Define Assets Locations
-define( "ASN_ASSETS_DIR", plugin_dir_url( __FILE__ ) . "assets/" );
-define( "ASN_ASSETS_PUBLIC_DIR", plugin_dir_url( __FILE__ ) . "assets/public" );
-define( 'ASN_VERSION', time() );
-
-// Load Assets
-class Ml_Guest_Post_Assets {
-
-    private $version;
-
-    function __construct() {
-
-        $this->version = time();
-
-        add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
-        add_action( 'wp_enqueue_scripts', array( $this, 'load_front_assets' ) );
-    }
-
-    function load_front_assets() {
-        wp_enqueue_style('ml-main-css',ASN_ASSETS_PUBLIC_DIR."/css/style.css",null,$this->version);
-
-        wp_enqueue_script( 'ml-bootstrap-js', ASN_ASSETS_PUBLIC_DIR . "/js/bootstrap.bundle.min.js", array('jquery'), $this->version, true );
-
-        wp_enqueue_script( 'ml-main-js', ASN_ASSETS_PUBLIC_DIR . "/js/scripts.js", array('jquery'), $this->version, true );
-
-    }
-
-    function load_textdomain() {
-        load_plugin_textdomain( 'Ml_Guest_Post', false, plugin_dir_url( __FILE__ ) . "/languages" );
-    }
-}
-
-new Ml_Guest_Post_Assets();
-
-run_ml_guest_post();
 
 
 /**
@@ -144,3 +109,10 @@ function new_excerpt_more( $more ) {
     return '';
 }
 add_filter('excerpt_more', 'new_excerpt_more');
+
+/**
+* Restrict Access
+*/
+add_action( 'init', 'blockusers_init' ); function blockusers_init() { if ( is_admin() && ! current_user_can( 'administrator' ) && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) { wp_redirect( home_url() ); exit; } }
+
+run_ml_guest_post();
