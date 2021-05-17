@@ -7,7 +7,7 @@
  * @package           Ml_Guest_Post
  *
  * @wordpress-plugin
- * Plugin Name:       ML Guest Post
+ * Plugin Name:       Multidots Guest Post
  * Plugin URI:        https://wprashed.com/
  * Description:       This plugin will for guest post
  * Version:           1.0.0
@@ -136,3 +136,11 @@ include_once 'parts/post/post-shortcode.php';
  * Load Form Shortcode.
  */
 include_once 'parts/forms/form-shortcode.php';
+
+/**
+* Except Filter
+*/
+function new_excerpt_more( $more ) {
+    return '';
+}
+add_filter('excerpt_more', 'new_excerpt_more');

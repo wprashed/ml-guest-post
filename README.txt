@@ -1,4 +1,4 @@
-=== Plugin Name ===
+=== Multidots Guest Post ===
 Contributors: largbasket
 Donate link: https://wprashed.com/
 Tags: post, guest post
